@@ -2,15 +2,15 @@ require 'net/ftp'
 
 namespace :spree_google_base do
 
-  task :generate do
-    generate_google_base_xml_to("#{RAILS_ROOT}/public/google_base.xml")
+  task :generate => :environment do
+    generate_google_base_xml_to("#{Rails.root}/public/google_base.xml")
   end
   
-  task :transfer do
-    transfer_google_base_xml_from("#{RAILS_ROOT}/public/google_base.xml")
+  task :transfer => :environment  do
+    transfer_google_base_xml_from("#{Rails.root}/public/google_base.xml")
   end
   
-  task :generate_and_transfer do
+  task :generate_and_transfer => :environment  do
     path = "#{RAILS_ROOT}/tmp/google_base.xml"
     generate_google_base_xml_to(path)
     transfer_google_base_xml_from(path)
@@ -42,21 +42,21 @@ def _filter_xml(output)
 end
   
 def _build_xml
-  returning '' do |output|
-    @public_dir = Spree::GoogleBase::Config[:public_domain] || ''
-    xml = Builder::XmlMarkup.new(:target => output, :indent => 2, :margin => 1)
-    xml.channel {
-      xml.title Spree::GoogleBase::Config[:title] || ''
-      xml.link @public_dir
-      xml.description Spree::GoogleBase::Config[:description] || ''
-      Product.google_base_scope.each do |product|
-        xml.item {
-          GOOGLE_BASE_ATTR_MAP.each do |k, v|
-             value = product.send(v)
-             xml.tag!(k, value.to_s) unless value.nil?
-          end
-        }
-      end
-    }
-  end
+  output = ''
+  @public_dir = Spree::GoogleBase::Config[:public_domain] || ''
+  xml = Builder::XmlMarkup.new(:target => output, :indent => 2, :margin => 1)
+  xml.channel {
+    xml.title Spree::GoogleBase::Config[:title] || ''
+    xml.link @public_dir
+    xml.description Spree::GoogleBase::Config[:description] || ''
+    Product.google_base_scope.each do |product|
+      xml.item {
+        GOOGLE_BASE_ATTR_MAP.each do |k, v|
+           value = product.send(v)
+           xml.tag!(k, value.to_s) unless value.nil?
+        end
+      }
+    end
+  }
+  return output
 end
