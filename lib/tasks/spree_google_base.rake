@@ -18,7 +18,6 @@ namespace :spree_google_base do
   end
 end
 
-
 def generate_google_base_xml_to(path)
   results = '<?xml version="1.0"?>' + "\n" + '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">' + "\n" + _filter_xml(_build_xml) + '</rss>'
   File.open(path, "w") do |io|
@@ -49,13 +48,20 @@ def _build_xml
     xml.title Spree::GoogleBase::Config[:title] || ''
     xml.link @public_dir
     xml.description Spree::GoogleBase::Config[:description] || ''
-    Product.google_base_scope.each do |product|
-      xml.item {
-        GOOGLE_BASE_ATTR_MAP.each do |k, v|
-           value = product.send(v)
-           xml.tag!(k, value.to_s) unless value.nil?
+    last_sku = nil
+    Product.google_base_scope.find_in_batches do |batch|
+      batch.each do |product|
+        product.variants_including_master.each do |variant|
+          next if variant.sku == last_sku
+          xml.item {
+            GOOGLE_BASE_ATTR_MAP.each do |k, v|
+              value = product.send(v, variant)
+              xml.tag!(k, value.to_s) unless value.nil?
+            end
+          }
+          last_sku = variant.sku
         end
-      }
+      end
     end
   }
   return output

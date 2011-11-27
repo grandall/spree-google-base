@@ -1,22 +1,38 @@
 Product.class_eval do
-  scope :google_base_scope, includes(:taxons, :images)
+  scope :google_base_scope, includes(:variants, :taxons, :images)
   
   protected
+
+  def google_base_id(variant)
+    variant.sku
+  end
   
-  def google_base_description
+  def google_base_title(variant)
+    self.name
+  end
+  
+  def google_base_description(variant)
     self.description
   end
   
-  def google_base_condition
+  def google_base_condition(variant)
     'new'
   end
 
-  def google_base_link
+  def google_base_availability(variant)
+    'in stock'
+  end
+
+  def google_base_price(variant)
+    variant.price
+  end
+
+  def google_base_link(variant)
     public_dir = Spree::GoogleBase::Config[:public_domain] || ''
     [public_dir.sub(/\/$/, ''), 'products', self.permalink].join('/')
   end
   
-  def google_base_image_link
+  def google_base_image_link(variant)
     public_dir = Spree::GoogleBase::Config[:public_domain] || ''
     if self.images.empty?
       nil
@@ -25,7 +41,7 @@ Product.class_eval do
     end
   end
 
-  def google_base_product_type
+  def google_base_product_type(variant)
     return nil unless Spree::GoogleBase::Config[:enable_taxon_mapping]
     product_type = ''
     priority = -1000
