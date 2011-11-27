@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_google_base'
-  s.version     = '0.30.1'
+  s.version     = '0.30.2'
   s.summary     = 'Google Base for Spree'
   s.description = 'Provide rake task to generate XML for Google Base and so on.'
   s.required_ruby_version = '>= 1.8.7'
 
-  s.authors     = ['Steph Skardal', 'Ryan Siddle', 'Roman Smirnov']
+  s.authors     = ['Steph Skardal', 'Ryan Siddle', 'Roman Smirnov', 'Graham Randall']
   # s.email             = 'david@loudthinking.com'
   s.homepage          = 'http://github.com/romul/spree-google-base'
   # s.rubyforge_project = 'actionmailer'
