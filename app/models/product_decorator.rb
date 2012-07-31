@@ -1,5 +1,5 @@
 Product.class_eval do
-  scope :google_base_scope, includes(:variants, :taxons, :images)
+  scope :google_base_scope, active.includes(:variants, :taxons, :images)
   
   protected
 
