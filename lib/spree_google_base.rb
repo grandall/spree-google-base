@@ -1,5 +1,5 @@
 require 'spree_core'
-require 'spree_google_base_hooks'
+require_relative '../app/overrides/spree_google_base_hooks'
 require 'spree/google_base/config'
 
 module SpreeGoogleBase
