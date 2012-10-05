@@ -1,4 +1,4 @@
-class GoogleBaseConfiguration < Configuration
+class GoogleBaseConfiguration < Spree::Configuration
   preference :title, :string, :default => 'My Site'
   preference :public_domain, :string, :default => 'http://www.mysite.com/'
   preference :description, :text, :default => 'My Description'
