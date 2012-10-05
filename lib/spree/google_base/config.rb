@@ -9,7 +9,7 @@ module Spree
     #   Spree::GoogleBase::Config.set(preferences_hash)  # Set the google base preferences as especified in +preference_hash+
     class Config
       include Singleton
-      include Spree::PreferenceAccess
+      include Spree::Preferences::Configuration
     
       class << self
         def instance
