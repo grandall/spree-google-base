@@ -1,7 +1,5 @@
-require 'spree_core'
-require_relative '../app/overrides/spree_google_base_hooks'
-#require 'spree/google_base/config'
-require 'google_base_configuration'
+require 'spree/core'
+#require_relative '../app/overrides/spree_google_base_hooks'
 
 module SpreeGoogleBase
   class Engine < Rails::Engine
