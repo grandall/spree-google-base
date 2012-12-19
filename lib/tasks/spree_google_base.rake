@@ -51,7 +51,7 @@ def _build_xml
     last_sku = nil
     Product.google_base_scope.find_in_batches do |batch|
       batch.each do |product|
-        product.variants_including_master.each do |variant|
+        product.variants.active.each do |variant|
           next if variant.sku == last_sku
           xml.item {
             GOOGLE_BASE_ATTR_MAP.each do |k, v|
