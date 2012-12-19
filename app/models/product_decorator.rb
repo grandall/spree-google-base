@@ -1,4 +1,4 @@
-Product.class_eval do
+Spree::Product.class_eval do
   scope :google_base_scope, active.includes(:variants, :taxons, :images)
   
   protected

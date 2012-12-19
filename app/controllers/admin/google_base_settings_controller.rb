@@ -1,4 +1,4 @@
-class Admin::GoogleBaseSettingsController < Admin::BaseController
+class Admin::GoogleBaseSettingsController < Spree::Admin::BaseController
   helper :google_base
   
   def update
