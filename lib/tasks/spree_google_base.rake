@@ -49,7 +49,7 @@ def _build_xml
     xml.link @public_dir
     xml.description Spree::GoogleBase::Config[:description] || ''
     last_sku = nil
-    Product.google_base_scope.find_in_batches do |batch|
+    Spree::Product.google_base_scope.find_in_batches do |batch|
       batch.each do |product|
         product.variants.active.each do |variant|
           next if variant.sku == last_sku

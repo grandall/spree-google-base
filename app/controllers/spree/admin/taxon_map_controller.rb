@@ -1,4 +1,4 @@
-class Admin::TaxonMapController < Spree::Admin::BaseController
+class Spree::Admin::TaxonMapController < Spree::Admin::BaseController
   def new
     super
   end

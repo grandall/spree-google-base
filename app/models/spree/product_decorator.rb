@@ -1,6 +1,6 @@
 Spree::Product.class_eval do
-  scope :google_base_scope, active.includes(:variants, :taxons, :images)
-  
+  scope :google_base_scope, active.includes(:variants, :taxons)
+
   protected
 
   def google_base_id(variant)
@@ -34,10 +34,10 @@ Spree::Product.class_eval do
   
   def google_base_image_link(variant)
     public_dir = Spree::GoogleBase::Config[:public_domain] || ''
-    if self.images.empty?
+    if self.master.images.empty?
       nil
     else
-      public_dir.sub(/\/$/, '') + self.images.first.attachment.url(:product)
+      public_dir.sub(/\/$/, '') + self.master.images.first.attachment.url(:product)
     end
   end
 
