@@ -8,7 +8,11 @@ Spree::Product.class_eval do
   end
   
   def google_base_title(variant)
-    self.name
+    if variant.manufacturer_number.present?
+      self.name + " (" + variant.manufacturer_number + ")"
+    else
+      self.name
+    end
   end
   
   def google_base_description(variant)
@@ -29,7 +33,7 @@ Spree::Product.class_eval do
 
   def google_base_link(variant)
     public_dir = Spree::GoogleBase::Config[:public_domain] || ''
-    [public_dir.sub(/\/$/, ''), 'products', self.permalink].join('/')
+    [public_dir.sub(/\/$/, ''), 'skus', self.manufacturer.permalink.split('/').last, variant.manufacturer_number].join('/')
   end
   
   def google_base_image_link(variant)

@@ -53,6 +53,7 @@ def _build_xml
       batch.each do |product|
         product.variants.active.each do |variant|
           next if variant.sku == last_sku
+          next if variant.manufacturer_number.blank?
           xml.item {
             GOOGLE_BASE_ATTR_MAP.each do |k, v|
               value = product.send(v, variant)
